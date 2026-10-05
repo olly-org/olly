@@ -1,3 +1,6 @@
 spring:
   application:
     name: olly
+
+# Olly settings (olly.*) default to a single standalone instance.
+# See README "Configuration" for every setting and its environment variable.

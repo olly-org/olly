@@ -18,3 +18,5 @@ For more information on ADRs, read [this blog post by Michael Nygard](https://co
 | ADR | Title | Status |
 |-----|-------|--------|
 | [0001](0001-record-architecture-decisions.md) | Record architecture decisions | Accepted |
+| [0002](0002-use-modular-monolith.md) | Use a Modular Monolith | Accepted |
+| [0003](0003-declare-deployment-topology.md) | Declare deployment topology explicitly | Accepted |
