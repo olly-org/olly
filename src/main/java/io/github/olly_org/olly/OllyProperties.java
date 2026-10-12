@@ -15,9 +15,9 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 @ConfigurationProperties("olly")
 public record OllyProperties(
     @DefaultValue("standalone") Mode mode,
-    @DefaultValue Node node,
-    @DefaultValue PubSub pubsub,
-    @DefaultValue EventLog eventLog) {
+    @DefaultValue NodeSettings node,
+    @DefaultValue PubSubSettings pubsub,
+    @DefaultValue EventLogSettings eventLog) {
 
   public OllyProperties {
     switch (mode) {
@@ -30,11 +30,11 @@ public record OllyProperties(
         }
       }
       case CLUSTER -> {
-        if (pubsub.type() == PubSub.Type.IN_MEMORY) {
+        if (pubsub.type() == PubSubSettings.Type.IN_MEMORY) {
           throw new IllegalArgumentException(
               "olly.pubsub.type=in-memory is not compatible with olly.mode=cluster. Use redis.");
         }
-        if (eventLog.type() == EventLog.Type.IN_MEMORY) {
+        if (eventLog.type() == EventLogSettings.Type.IN_MEMORY) {
           throw new IllegalArgumentException(
               "olly.event-log.type=in-memory is not compatible with olly.mode=cluster. Use kafka.");
         }
@@ -52,8 +52,8 @@ public record OllyProperties(
    *
    * @param roles Comma-separated list of roles this instance runs.
    */
-  public record Node(@DefaultValue({"api", "core", "gateway"}) Set<Role> roles) {
-    public Node {
+  public record NodeSettings(@DefaultValue({"api", "core", "gateway"}) Set<Role> roles) {
+    public NodeSettings {
       if (roles.isEmpty()) {
         throw new IllegalArgumentException("olly.node.roles must not be empty.");
       }
@@ -77,7 +77,7 @@ public record OllyProperties(
    * @param type Pub/sub implementation. In-memory reaches only this instance; use redis when
    *     running multiple instances.
    */
-  public record PubSub(@DefaultValue("in-memory") Type type) {
+  public record PubSubSettings(@DefaultValue("in-memory") Type type) {
     public enum Type {
       IN_MEMORY,
       REDIS
@@ -90,7 +90,7 @@ public record OllyProperties(
    * @param type Event log implementation. In-memory reaches only this instance and is lost on
    *     restart; use kafka when running multiple instances.
    */
-  public record EventLog(@DefaultValue("in-memory") Type type) {
+  public record EventLogSettings(@DefaultValue("in-memory") Type type) {
     public enum Type {
       IN_MEMORY,
       KAFKA

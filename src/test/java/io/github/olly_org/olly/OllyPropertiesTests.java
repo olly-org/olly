@@ -2,10 +2,10 @@ package io.github.olly_org.olly;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.github.olly_org.olly.OllyProperties.EventLog;
+import io.github.olly_org.olly.OllyProperties.EventLogSettings;
 import io.github.olly_org.olly.OllyProperties.Mode;
-import io.github.olly_org.olly.OllyProperties.Node.Role;
-import io.github.olly_org.olly.OllyProperties.PubSub;
+import io.github.olly_org.olly.OllyProperties.NodeSettings.Role;
+import io.github.olly_org.olly.OllyProperties.PubSubSettings;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.assertj.AssertableApplicationContext;
@@ -26,8 +26,8 @@ class OllyPropertiesTests {
           assertThat(properties.node().roles())
               .containsExactlyInAnyOrder(Role.API, Role.CORE, Role.GATEWAY);
           assertThat(properties.node().runsAllRoles()).isTrue();
-          assertThat(properties.pubsub().type()).isEqualTo(PubSub.Type.IN_MEMORY);
-          assertThat(properties.eventLog().type()).isEqualTo(EventLog.Type.IN_MEMORY);
+          assertThat(properties.pubsub().type()).isEqualTo(PubSubSettings.Type.IN_MEMORY);
+          assertThat(properties.eventLog().type()).isEqualTo(EventLogSettings.Type.IN_MEMORY);
         });
   }
 
@@ -38,8 +38,8 @@ class OllyPropertiesTests {
         .run(
             context -> {
               OllyProperties properties = context.getBean(OllyProperties.class);
-              assertThat(properties.pubsub().type()).isEqualTo(PubSub.Type.REDIS);
-              assertThat(properties.eventLog().type()).isEqualTo(EventLog.Type.IN_MEMORY);
+              assertThat(properties.pubsub().type()).isEqualTo(PubSubSettings.Type.REDIS);
+              assertThat(properties.eventLog().type()).isEqualTo(EventLogSettings.Type.IN_MEMORY);
             });
   }
 
@@ -111,8 +111,8 @@ class OllyPropertiesTests {
               OllyProperties properties = context.getBean(OllyProperties.class);
               assertThat(properties.mode()).isEqualTo(Mode.CLUSTER);
               assertThat(properties.node().roles()).containsExactlyInAnyOrder(Role.API, Role.CORE);
-              assertThat(properties.pubsub().type()).isEqualTo(PubSub.Type.REDIS);
-              assertThat(properties.eventLog().type()).isEqualTo(EventLog.Type.KAFKA);
+              assertThat(properties.pubsub().type()).isEqualTo(PubSubSettings.Type.REDIS);
+              assertThat(properties.eventLog().type()).isEqualTo(EventLogSettings.Type.KAFKA);
             });
   }
 
