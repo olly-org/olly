@@ -20,3 +20,6 @@ For more information on ADRs, read [this blog post by Michael Nygard](https://co
 | [0001](0001-record-architecture-decisions.md) | Record architecture decisions | Accepted |
 | [0002](0002-use-modular-monolith.md) | Use a Modular Monolith | Accepted |
 | [0003](0003-declare-deployment-topology.md) | Declare deployment topology explicitly | Accepted |
+| [0004](0004-use-postgres-and-h2-with-flyway.md) | Use PostgreSQL and H2 with Flyway migrations | Accepted |
+| [0005](0005-scope-data-by-tenant.md) | Scope all data by tenant, starting with a built-in default tenant | Accepted |
+| [0006](0006-open-session-kinds-closed-lifecycle.md) | Open session kinds, closed lifecycle categories | Accepted |
