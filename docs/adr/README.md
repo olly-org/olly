@@ -23,3 +23,5 @@ For more information on ADRs, read [this blog post by Michael Nygard](https://co
 | [0004](0004-use-postgres-and-h2-with-flyway.md) | Use PostgreSQL and H2 with Flyway migrations | Accepted |
 | [0005](0005-scope-data-by-tenant.md) | Scope all data by tenant, starting with a built-in default tenant | Accepted |
 | [0006](0006-open-session-kinds-closed-lifecycle.md) | Open session kinds, closed lifecycle categories | Accepted |
+| [0007](0007-put-infrastructure-behind-ports.md) | Put infrastructure behind ports with two adapters each | Accepted |
+| [0008](0008-use-event-log-in-and-pubsub-out.md) | Send input through an event log and output through pub/sub | Accepted |
