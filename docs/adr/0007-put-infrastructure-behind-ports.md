@@ -7,8 +7,8 @@
 
 Standalone mode must run with no infrastructure.
 Later on we must support Redis and Kafka to replace in-memory and for cluster support.
-Both modes must behave the same, and it must easy to prove and enforce this. 
-The modules that need infrastructure should require dependence on Redis or Kafka code directly.
+Both modes must behave the same, and it must be easy to prove and enforce this.
+The modules that need infrastructure should not depend on Redis or Kafka code directly.
 
 ## Decision
 
