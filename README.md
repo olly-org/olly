@@ -1,6 +1,8 @@
 # olly
 Olly (Open Live Interactions)
 
+Status: Early development, not usable yet.
+
 ## Configuration
 
 With no configuration, Olly runs as a single standalone instance:
