@@ -1,5 +1,6 @@
 # olly
 Olly (Open Live Interactions)
+Status: Early development, not usable yet.
 
 ## Configuration
 
