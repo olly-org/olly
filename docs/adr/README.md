@@ -25,3 +25,4 @@ For more information on ADRs, read [this blog post by Michael Nygard](https://co
 | [0006](0006-open-session-kinds-closed-lifecycle.md) | Open session kinds, closed lifecycle categories | Accepted |
 | [0007](0007-put-infrastructure-behind-ports.md) | Put infrastructure behind ports with two adapters each | Accepted |
 | [0008](0008-use-event-log-in-and-pubsub-out.md) | Send input through an event log and output through pub/sub | Accepted |
+| [0009](0009-model-aggregates-with-spring-data-jdbc.md) | Model aggregates with Spring Data JDBC | Accepted |

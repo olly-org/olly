@@ -42,11 +42,38 @@ abstract class AbstractMigrationTests {
 
   @Test
   @Transactional
-  void rejectsDuplicateJoinCodeWithinTenant() {
+  void rejectsDuplicateJoinCodeAmongOpenSessions() {
     insertSession("ABC234", "poll", "OPEN");
 
     assertThatThrownBy(() -> insertSession("ABC234", "poll", "OPEN"))
         .isInstanceOf(DuplicateKeyException.class);
+  }
+
+  @Test
+  @Transactional
+  void reusesJoinCodesOfClosedSessions() {
+    insertSession("ABC234", "poll", "CLOSED");
+    insertSession("ABC234", "poll", "CLOSED");
+    insertSession("ABC234", "poll", "OPEN");
+
+    Integer count =
+        jdbc.queryForObject(
+            "SELECT count(*) FROM sessions WHERE join_code = 'ABC234'", Integer.class);
+    assertThat(count).isEqualTo(3);
+  }
+
+  @Test
+  @Transactional
+  void rejectsOpenSessionWithoutLiveJoinCode() {
+    assertThatThrownBy(() -> insertSession("ABC234", null, "poll", "OPEN"))
+        .isInstanceOf(DataIntegrityViolationException.class);
+  }
+
+  @Test
+  @Transactional
+  void rejectsClosedSessionHoldingLiveJoinCode() {
+    assertThatThrownBy(() -> insertSession("ABC234", "ABC234", "poll", "CLOSED"))
+        .isInstanceOf(DataIntegrityViolationException.class);
   }
 
   @Test
@@ -68,15 +95,21 @@ abstract class AbstractMigrationTests {
   }
 
   private void insertSession(String joinCode, String kind, String state) {
+    insertSession(joinCode, "OPEN".equals(state) ? joinCode : null, kind, state);
+  }
+
+  private void insertSession(String joinCode, String liveJoinCode, String kind, String state) {
     OffsetDateTime now = OffsetDateTime.now();
     jdbc.update(
         """
-        INSERT INTO sessions (id, tenant_id, join_code, kind, state, version, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, 0, ?, ?)
+        INSERT INTO sessions
+            (id, tenant_id, join_code, live_join_code, kind, state, version, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?)
         """,
         UUID.randomUUID(),
         DEFAULT_TENANT_ID,
         joinCode,
+        liveJoinCode,
         kind,
         state,
         now,

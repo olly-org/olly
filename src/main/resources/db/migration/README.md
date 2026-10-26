@@ -17,6 +17,7 @@ Each file name says which application module owns the change.
 - Constraints: `pk_<table>`, `fk_<table>_<column>`, `uq_<table>_<columns>`, `ck_<table>_<column>`, `ix_<table>_<columns>`.
 - Every table except `tenants` has a `tenant_id`.
 - Values that plugins can extend (such as `kind`) have no `CHECK` constraint; platform-owned categories (such as `state`) do.
+- Don't use SQL reserved words (such as `user`, `order`, `value`, `key`) as table or column names; Olly's SQL leaves identifiers unquoted.
 
 ## Rules
 
